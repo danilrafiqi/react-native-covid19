@@ -4,6 +4,8 @@ import color from '../../../config/constant/color';
 import CardInfoGrid from '../../../components/card/CardInfoGrid';
 import axios from 'axios';
 import api from '../../../config/constant/api';
+import {useNavigation} from '@react-navigation/native';
+
 interface CardStatus {
   value: number;
   detail: string;
@@ -17,6 +19,7 @@ interface CardIndonesiaState {
 }
 
 const CardIndonesia = () => {
+  const navigation = useNavigation();
   const [data, setData] = useState<CardIndonesiaState>();
 
   const getData = async () => {
@@ -43,7 +46,7 @@ const CardIndonesia = () => {
           }}>
           Indonesia
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('IndonesianCase')}>
           <Text
             style={{
               marginRight: 10,
