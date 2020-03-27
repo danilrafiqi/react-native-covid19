@@ -1,9 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
 import color from '../../../config/constant/color';
 import CardInfoGrid from '../../../components/card/CardInfoGrid';
+import axios from 'axios';
+import api from '../../../config/constant/api';
+interface CardStatus {
+  value: number;
+  detail: string;
+}
+
+interface CardIndonesiaState {
+  confirmed: CardStatus;
+  recovered: CardStatus;
+  deaths: CardStatus;
+  lastUpdate: string;
+}
 
 const CardIndonesia = () => {
+  const [data, setData] = useState<CardIndonesiaState>();
+
+  const getData = async () => {
+    try {
+      let res = await axios.get(api.api);
+      setData(res.data);
+    } catch (e) {
+      console.warn('error', e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <View
       style={{
@@ -26,9 +54,25 @@ const CardIndonesia = () => {
         style={{
           flexDirection: 'row',
         }}>
-        <CardInfoGrid color={color.yellow} status="Confirmed" value="123" />
-        <CardInfoGrid color={color.teal} status="Recovered" value="123" />
-        <CardInfoGrid color={color.red} status="Death" value="123" />
+        {data && (
+          <>
+            <CardInfoGrid
+              color={color.yellow}
+              status="Confirmed"
+              value={data.confirmed.value}
+            />
+            <CardInfoGrid
+              color={color.teal}
+              status="Recovered"
+              value={data.recovered.value}
+            />
+            <CardInfoGrid
+              color={color.red}
+              status="Death"
+              value={data.deaths.value}
+            />
+          </>
+        )}
       </View>
       <Text
         style={{
@@ -36,7 +80,7 @@ const CardIndonesia = () => {
           textAlign: 'right',
           color: color.white,
         }}>
-        Last Update : 2020-01-01:00:00:00
+        {data && data.lastUpdate}
       </Text>
       <Button title="Detail" onPress={() => console.log('di klik')} />
     </View>

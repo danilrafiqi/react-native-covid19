@@ -4,7 +4,7 @@ import color from '../../config/constant/color';
 
 interface Props {
   status: string;
-  value: string;
+  value: number;
   color: string;
 }
 
