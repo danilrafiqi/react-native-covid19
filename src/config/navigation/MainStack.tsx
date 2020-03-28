@@ -3,7 +3,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import MainScreen from '../../containers/screens/Main';
 import CountryScreen from '../../containers/screens/Country';
 import color from '../constant/color';
-import {Image, Button} from 'react-native';
+import {Image, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator();
 const MainStack = () => {
@@ -36,7 +37,9 @@ const MainStack = () => {
             marginRight: 10,
           },
           headerRight: () => (
-            <Button onPress={() => console.log('halo dunia')} title="info" />
+            <TouchableOpacity>
+              <Icon name="ios-alert" size={30} color={color.white} />
+            </TouchableOpacity>
           ),
         }}
       />
